@@ -33,14 +33,13 @@ function isWrong(charGuess){
 	}
 }
 function addWrong(charGuess){
-	if(!wrongLetters.includes(charGuess) && !rightLetters.includes(charGuess)){
+	if(!selection.includes(charGuess)&&!wrongLetters.includes(charGuess)){
 		wrongLetters+=charGuess;
 		numGuesses--;
 	}
 }
-
 function addRight(charGuess){
-	if(!wrongLetters.includes(charGuess) && !rightLetters.includes(charGuess)){
+	if(selection.includes(charGuess) && !rightLetters.includes(charGuess)){
 		rightLetters+=charGuess;
 	}
 }
