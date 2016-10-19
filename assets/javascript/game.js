@@ -15,35 +15,6 @@ var rightLetters = '';
 var wrongArray = wrongLetters.split('');
 var rightArray = rightLetters.split('');
 
-//The word is displayed with dashes
-function wordToDashes (wordString){
-	var dashedWord = '';
-	for (var i = 0; i < selectionArray.length; i++) {
-		dashedWord += '-';
-	}
-	return dashedWord;
-}
-
-function isWrong(charGuess){
-	if(userGuess!==charGuess){
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-function addWrong(charGuess){
-	if(!selection.includes(charGuess)&&!wrongLetters.includes(charGuess)){
-		wrongLetters+=charGuess;
-		numGuesses--;
-	}
-}
-function addRight(charGuess){
-	if(selection.includes(charGuess) && !rightLetters.includes(charGuess)){
-		rightLetters+=charGuess;
-	}
-}
-
 //Main method
 //A right guess replaces the dash
 function replaceDash (wordString){
@@ -59,29 +30,44 @@ function replaceDash (wordString){
 	return dashedArray;
 }
 
-//After max guesses reached, a loss is counted, correct word is displayed, next word is played
-function maxGuessed (){
-	if(numGuesses===0)
-	{
-		dashedArray= selectionArray;
+//The word is displayed with dashes
+function wordToDashes (wordString){
+	var dashedWord = '';
+	for (var i = 0; i < selectionArray.length; i++) {
+		dashedWord += '-';
+	}
+	return dashedWord;
+}
+
+//Returns boolean if guess is wrong
+function isWrong(charGuess){
+	if(userGuess!==charGuess){
 		return true;
+	}
+	else{
+		return false;
 	}
 }
 
-//After word is guessed, a win is counted, next word is displayed
-//might cause error
-function gotWord(){
-	for (var i = 0; i < dashedArray.length; i++) {
-		if(dashedArray[i]!==selectionArray[i]){
-			return false;
-		}
-		else{
-			return true;
-			break;
-		}
-		}
+//Adds a wrong guess to the string wrongLetters
+function addWrong(charGuess){
+	if(!selection.includes(charGuess)&&!wrongLetters.includes(charGuess)){
+		wrongLetters+=charGuess;
+		numGuesses--;
+	}
 }
 
+//Adds a right guess to the string rightLetters
+function addRight(charGuess){
+	if(selection.includes(charGuess) && !rightLetters.includes(charGuess)){
+		rightLetters+=charGuess;
+	}
+}
+
+
+//DOM methods
+document.getElementById('word-play').innerHTML = replaceDash(selection);
+document.getElementById('num').innerHTML = numGuesses;
 //User presses a key
 document.onkeyup = function(event) {
 	// Determines which exact key was selected. Make it lowercase
