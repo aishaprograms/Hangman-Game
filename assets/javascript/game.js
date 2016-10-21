@@ -1,47 +1,55 @@
+var spells = ['accio', 'aguamenti', 'alohomora', 'colloportus', 'confringo',
+'confundo', 'crucio', 'descendo', 'diffindo', 'engorgio', 'episkey'];
 var userGuess='';
-var spells = ['accio', 'aguamenti', 'alohomora', 'colloportus', 'confringo', 'confundo', 'crucio', 'descendo', 'diffindo', 'engorgio', 'episkey'];
-var selection = spells[Math.floor(Math.random()*spells.length)];
-//Selected word as array and its dashed version
-var selectionArray = selection.split('');
-var dashedArray = wordToDashes(selection).split('');
-//Global variables (numerical): number of guesses remaining, number of wins, number of losses
-var numGuesses = 7;
+var word = '';
+var hiddenWord = '';
+var wordArray = [];
+var hiddenWordArray = [];
+var maxGuesses = 7;
 var numWins = 0;
 var numLosses = 0;
-// Global variables (string): wrong letters guessed, right letters guessed
 var wrongLetters = '';
-var rightLetters = '';
-//Global variables (array): wrong letters guessed, right letters guessed
-var wrongArray = wrongLetters.split('');
-var rightArray = rightLetters.split('');
+var usedLetters = '';
 
-//Main method
-//A right guess replaces the dash
-function replaceDash (wordString){
-	for (var i = 0; i < dashedArray.length; i++) {
-		if(!isWrong(selectionArray[i])){
-			dashedArray[i] = userGuess;
-			addRight(userGuess);
-		}
-		else{
-			addWrong(userGuess);
-		}
-	}
-	return dashedArray;
+function reset(){
+	userGuess='';
+	word = '';
+	hiddenWord = '';
+	wordArray = [];
+	hiddenWordArray = [];
+	maxGuesses = 7;
+	numWins = 0;
+	numLosses = 0;
+	wrongLetters = '';
+	usedLetters = '';
 }
 
-//The word is displayed with dashes
-function wordToDashes (wordString){
-	var dashedWord = '';
-	for (var i = 0; i < selectionArray.length; i++) {
-		dashedWord += '-';
-	}
-	return dashedWord;
+//Picks a word from the array using Math.random()
+function pickWord(){
+	word = spells[Math.floor(Math.random()*spells.length)];
 }
 
-//Returns boolean if guess is wrong
-function isWrong(charGuess){
-	if(userGuess!==charGuess){
+function hideWord (wordString){
+	wordArray = word.split('');
+	for (var i = 0; i < wordArray.length; i++) {
+		hiddenWord += '-';
+	}
+	hiddenWordArray = hiddenWord.split('');
+	return hiddenWord;
+}
+
+function showWord(){
+	return word;
+}
+
+function gameStart(){
+	pickWord();
+	hideWord();
+}
+
+//Returns boolean if userGuess is wrong
+function guessMatchesChar (charOfWord){
+	if(userGuess===charOfWord){
 		return true;
 	}
 	else{
@@ -49,30 +57,87 @@ function isWrong(charGuess){
 	}
 }
 
-//Adds a wrong guess to the string wrongLetters
-function addWrong(charGuess){
-	if(!selection.includes(charGuess)&&!wrongLetters.includes(charGuess)){
-		wrongLetters+=charGuess;
-		numGuesses--;
+
+//Adds a wrong guess to the string wrongLetters and reduces the number of remaining guesses
+function addWrongLetter(userGuess){
+	if(!word.includes(userGuess) && !wrongLetters.includes(userGuess)){
+		wrongLetters+=userGuess;
+		maxGuesses--;
+		document.getElementById('charset-wrong').innerHTML = wrongLetters;
+		document.getElementById('num-guesses').innerHTML = maxGuesses;
 	}
 }
 
-//Adds a right guess to the string rightLetters
-function addRight(charGuess){
-	if(selection.includes(charGuess) && !rightLetters.includes(charGuess)){
-		rightLetters+=charGuess;
+//Adds a right guess to the string usedLetters
+function addUsedLetter(userGuess){
+	if(word.includes(userGuess) && !usedLetters.includes(userGuess)){
+		usedLetters+=userGuess;
 	}
 }
 
+function guessLetter(){
+	for (var i = 0; i < hiddenWordArray.length; i++) {
+		if(guessMatchesChar(wordArray[i])){
+			hiddenWordArray[i] = userGuess;
+			addUsedLetter(userGuess);
+		}
+		else{
+			addWrongLetter(userGuess);
+		}
+	}
+	hiddenWord = hiddenWordArray.join('');
+	return hiddenWord;
+}
+
+function showPlay(){
+	document.getElementById('word-play').innerHTML = guessLetter();
+	wonGame();
+	gameOver();
+}
+
+function addWin(){
+	numWins++;
+}
+
+function addLoss(){
+	numLosses++;
+}
+
+function wonGame(){
+	if(hiddenWord === word){
+		addWin();
+		document.getElementById('status-is').innerHTML = '<h3>You won!</h3>';
+		document.getElementById('wins').innerHTML = 'Wins: ' + numWins;
+		return true;
+	}
+}
+
+function gameOver(){
+	if (maxGuesses === 0){
+		showWord();
+		addLoss();
+		document.getElementById('status-is').innerHTML = '<h3>Game over...<h3>';
+		document.getElementById('losses').innerHTML = 'Losses: ' + numLosses;
+		return true;
+	}
+}
 
 //DOM methods
-document.getElementById('word-play').innerHTML = replaceDash(selection);
-document.getElementById('num').innerHTML = numGuesses;
+gameStart();
 //User presses a key
+//fix the reset and gamestart
 document.onkeyup = function(event) {
 	// Determines which exact key was selected. Make it lowercase
 	userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-	document.getElementById('word-play').innerHTML = replaceDash(selection);
-	document.getElementById('charset-wrong').innerHTML = wrongLetters;
-	document.getElementById('num').innerHTML = numGuesses;
+	if(!wonGame() && !gameOver()){
+		showPlay();
+	}
+	else if(wonGame()){
+		reset();
+		gameStart();
+	}
+	else if(gameOver()){
+		reset();
+		gameStart();
+	}
 }
