@@ -1,3 +1,4 @@
+// All variables
 var spells = ['accio', 'aguamenti', 'alohomora', 'colloportus', 'confringo',
 'confundo', 'crucio', 'descendo', 'diffindo', 'engorgio', 'episkey', 'evanesco', 'expelliarmus', 'imperio', 'incendio', 'lumos', 'nox', 'relashio', 'reparo', 'silencio'];
 var userGuess='';
@@ -16,6 +17,7 @@ function pickWord(){
 	word = spells[Math.floor(Math.random()*spells.length)];
 }
 
+// returns the word using dashes
 function hideWord (wordString){
 	wordArray = word.split('');
 	for (var i = 0; i < wordArray.length; i++) {
@@ -25,6 +27,7 @@ function hideWord (wordString){
 	return hiddenWord;
 }
 
+// returns the word
 function showWord(){
 	return word;
 }
@@ -51,6 +54,8 @@ function addUsedLetter(userGuess){
 	}
 }
 
+// replaces dashes with guessed letter if correct. returns modified word-play
+//starts with and returns string but modifies array of string letters
 function guessLetter(){
 	for (var i = 0; i < hiddenWordArray.length; i++) {
 		if(guessMatchesChar(wordArray[i])){
@@ -65,29 +70,37 @@ function guessLetter(){
 	return hiddenWord;
 }
 
+//adds one to numWins if user wins round
 function addWin(){
 	numWins++;
 }
 
+//adds one to numLosses if user loses round
 function addLoss(){
 	numLosses++;
 }
 
+//returns boolean if user got the word through guesses
 function wonGame(){
 	return hiddenWord === word;
 }
 
+//returns boolean if user ran out of guesses
 function gameOver(){
 	return maxGuesses === 0;
 }
 
+//returns boolean if word is empty string hence indicating a new game
 function isNewGame(){
 	return word === '';
 }
 
+//returns boolean if user is playing current round
 function isPlaying(){
 	return hiddenWord !== word && maxGuesses > 0;
 }
+
+//resets the game with reset variables
 function reset(){
 	userGuess='';
 	word = '';
@@ -99,6 +112,7 @@ function reset(){
 	usedLetters = '';
 }
 
+//displays the start screen
 function gameStart(){
 	pickWord();
 	hideWord();
@@ -110,6 +124,7 @@ function gameStart(){
 	changeImg();
 }
 
+//displays plays on the screen
 function showPlay(){
 	document.getElementById('word-play').innerHTML = guessLetter();
 	document.getElementById('charset-wrong').innerHTML = wrongLetters;
@@ -118,6 +133,7 @@ function showPlay(){
 	changeImg();
 }
 
+//displays a win on the screen
 function showWin(){
 	addWin();
 	document.getElementById('word-play').innerHTML = showWord();
@@ -127,6 +143,7 @@ function showWin(){
 	document.getElementById('hp-caption').innerHTML = '<p>Congratulations. You got the spell this round.</p>';
 }
 
+//displays a loss on the screen
 function showLoss(){
 	addLoss();
 	document.getElementById('word-play').innerHTML = showWord();
@@ -135,6 +152,7 @@ function showLoss(){
 	document.getElementById('winning-word').innerHTML = '<h4>The winning spell is ' + word + '. Press space to continue.</h4>';
 }
 
+//changes the image in its div depending on how many guesses are remaining
 function changeImg(){
 	if(maxGuesses===7){
 		document.getElementById('hp-img').innerHTML = '<img src=assets/images/potter.jpg>';
@@ -172,6 +190,8 @@ function changeImg(){
 
 //DOM methods
 //User presses a key
+//set up so that there is a delay between each round so that the user can see the results of that round
+//next round starts at the hit of any key, but user is instructed to hit space bar
 gameStart();
 document.onkeyup = function(event) {
 	// Determines which exact key was selected. Make it lowercase

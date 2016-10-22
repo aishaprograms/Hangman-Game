@@ -14,12 +14,14 @@
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-6 col-xs-12">
 			<div id="game">
+				<!-- div tag for instructions -->
 				<div class = "row" id="instructions">
 					<h2>Press any letter key to guess!</h2>
 					<h4>Take caution to not press any key by accident, otherwise you will lose an attempt. You have seven attempts to guess before He-Who-Must-Not-Be-Named defeats you. Once you get the word or run out of guesses, press space to continue onto the next round.</h4>
 				</div>
+				<!-- div tag to display the current playing word -->
 				<div class = "row" id="word-div">
 					<div id="word-is">
 						<h3>Word is: </h3>
@@ -27,18 +29,21 @@
 					<div id="word-play"></div>
 					<div id="winning-word"></div>
 				</div>
+				<!-- div tag to display the wrong letters -->
 				<div class = "row" id="wrong-guess">
 					<div id="wrong-is">
 						<h3>Wrong guesses: </h3>
 					</div>
 					<div id="charset-wrong"></div>
 				</div>
+				<!-- div tag to display the remaining number of guesses -->
 				<div class = "row" id="num-remain">
 					<div id="remain-is">
 						<h3>Number of guesses remaining: </h3>
 					</div>
 					<div id="num-guesses"></div>
 				</div>
+				<!-- div tag to display wins and losses -->
 				<div class = "row" id="game-status">
 					<div id="wins">
 						<p>Wins: </p>
@@ -49,12 +54,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-1"></div>
-		<div class="col-md-5">
+		<!-- div tag for layout purposes -->
+		<div class="col-md-1 col-xs-12"></div>
+		<div class="col-md-5 col-xs-12">
 			<div class="row">
+				<!-- div tag to display status of playing, win, or loss -->
 				<div id="status-is">
 					<h3>You are playing this round.</h3>
 				</div>
+				<!-- div tag for changing images -->
 				<div id="hp-img">
 					<img src=assets/images/potter.jpg>
 				</div>
