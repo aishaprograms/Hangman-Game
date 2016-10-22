@@ -3,41 +3,66 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hangman Game</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/journal/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Shadows+Into+Light" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 </head>
 <body>
+<div class="jumbotron">
+	<h1 id="title">Test your knowledge of Harry Potter Spells!</h1>
+	<p id="jumbo-caption">Be sure to make the correct guess lest you are defeated by He-Who-Must-Not-Be-Named.</p>
+</div>
 <div class="container">
-	<h1>Test your knowledge of Harry Potter Spells!</h1>
-	<div id="game">
-		<div id="instructions">
-			<h2>Press any key to guess!</h2>
+	<div class="row">
+		<div class="col-md-6">
+			<div id="game">
+				<div class = "row" id="instructions">
+					<h2>Press any letter key to guess!</h2>
+					<h4>Take caution to not press any key by accident, otherwise you will lose an attempt. You have seven attempts to guess before He-Who-Must-Not-Be-Named defeats you. Once you get the word or run out of guesses, press space to continue onto the next round.</h4>
+				</div>
+				<div class = "row" id="word-div">
+					<div id="word-is">
+						<h3>Word is: </h3>
+					</div>
+					<div id="word-play"></div>
+					<div id="winning-word"></div>
+				</div>
+				<div class = "row" id="wrong-guess">
+					<div id="wrong-is">
+						<h3>Wrong guesses: </h3>
+					</div>
+					<div id="charset-wrong"></div>
+				</div>
+				<div class = "row" id="num-remain">
+					<div id="remain-is">
+						<h3>Number of guesses remaining: </h3>
+					</div>
+					<div id="num-guesses"></div>
+				</div>
+				<div class = "row" id="game-status">
+					<div id="wins">
+						<p>Wins: </p>
+					</div>
+					<div id="losses">
+						<p>Losses: </p>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div id="word">
-			<div id="word-is">
-				<h3>Word is: </h3>
-			</div>
-			<div id="word-play"></div>
-		</div>
-		<div id="wrong-guess">
-			<div id="wrong-is">
-				<h3>Wrong guesses: </h3>
-			</div>
-			<div id="charset-wrong"></div>
-		</div>
-		<div id="num-remain">
-			<div id="remain-is">
-				<h3>Number of guesses remaining: </h3>
-			</div>
-			<div id="num-guesses"></div>
-		</div>
-		<div id="game-status">
-			<div id="status-is">
-				<h3>You are playing this round. </h3>
-			</div>
-			<div id="wins">
-				<p>Wins: </p>
-			</div>
-			<div id="losses">
-				<p>Losses: </p>
+		<div class="col-md-1"></div>
+		<div class="col-md-5">
+			<div class="row">
+				<div id="status-is">
+					<h3>You are playing this round.</h3>
+				</div>
+				<div id="hp-img">
+					<img src=assets/images/potter.jpg>
+				</div>
+				<blockquote>
+					<div id="hp-caption">
+						<p>You are being trusted to handle this spell.</p>
+					</div>
+				</blockquote>
 			</div>
 		</div>
 	</div>
