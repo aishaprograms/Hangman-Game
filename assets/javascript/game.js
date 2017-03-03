@@ -239,6 +239,7 @@ gameStart();
 document.onkeyup = function(event) {
     // Determines which exact key was selected. Make it lowercase
     userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+    //makes sure letter key affects dom only
     if(userGuess.match(/[a-zA-Z]/)){
         if (isNewGame()) {
             gameStart();
